@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="signuplogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <form action="" id="form" autocomplete="off">
+        <div id="imgholder">
+            <img src="./ezgif.com-gif-maker.gif" alt="">
+            <div id="eyeband"></div>
+        </div>
+        <h2 id="heading">Sign Up</h2>
+        <div id="cont">
+            <input type="text" id="fname" placeholder="First Name" name="fname" required><br><br>
+            <input type="text" id="lname" placeholder="Last Name" name="lname" required><br><br>
+            <input type="email" id="email" placeholder="Email" name="email" required><br><br>
+            <input type="text" id="phno" pattern="[1-9]{1}[0-9]{9}" placeholder="Phone No" name="phno"
+                required><br><br>
+            <div class="password-layout">
+                <input type="password" id="pass" placeholder="Password" name="password1" required>
+                <i class="fa-solid fa-eye" id="passicon"></i>
+            </div>
+            </br>
+            
+            <div class="password-layout">
+                <input type="password" id="repass" placeholder="Confirm Password" name="password2"
+                required>
+                <i class="fa-solid fa-eye" id="repassicon"></i>
+            </div>
+            <br/>
+            <input type="submit" id="submit" value="Submit"><br/><br/>
+            <span>Already have an Account? </span><a href="login.html">Log In</a>
+        </div>
+    </form>
+    <script src="./signuplogin.js"></script>
+</body>
+
+</html>
