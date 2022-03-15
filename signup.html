@@ -11,25 +11,40 @@
 </head>
 
 <body>
-    <form action="" id="form" autocomplete="off">
+    <form action="" id="form" autocomplete="off" method="POST" action="/signup">
         <div id="imgholder">
             <img src="./ezgif.com-gif-maker.gif" alt="">
             <div id="eyeband"></div>
         </div>
-        <h2 id="heading">Log In</h2>
+        <h2 id="heading">Sign Up</h2>
         <div id="cont">
+            <input type="text" id="fname" placeholder="First Name" name="fname" required><br><br>
+            <input type="text" id="lname" placeholder="Last Name" name="lname" required><br><br>
             <input type="email" id="email" placeholder="Email" name="email" required><br><br>
+            <input type="text" id="phno" pattern="[1-9]{1}[0-9]{9}" placeholder="Phone No" name="phno"
+                required><br><br>
+                <form action="">
+                    <input type="text" id="otp" placeholder="OTP" name="otp"><button id="generate">Generate</button><br><br>
+                </form>
+            
             <div class="password-layout">
                 <input type="password" id="pass" placeholder="Password" name="password1" required>
                 <i class="fa-solid fa-eye" id="passicon"></i>
             </div>
             </br>
             
+            <div class="password-layout">
+                <input type="password" id="repass" placeholder="Confirm Password" name="password2"
+                required>
+                <i class="fa-solid fa-eye" id="repassicon"></i>
+            </div>
+            <br/>
             <input type="submit" id="submit" value="Submit"><br/><br/>
-            <span>Don't have any accoount? </span><a href="./signup.html">Sign Up</a>
+            <span>Already have an Account? </span><a href="login">Log In</a>
         </div>
     </form>
     <script src="./signuplogin.js"></script>
+    <script src="./otp.js"></script>
 </body>
 
 </html>
