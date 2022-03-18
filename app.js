@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-var cookieParser = require('cookie-parser');
-var nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
+const passwordGenerator = require('generate-password');
 require('dotenv').config();
 
 
@@ -17,7 +18,7 @@ mongoose.connect(`${link}`, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const otpSchema = new mongoose.Schema({
     otpno: { type: String, require: true },
-    etime: { type: String, required: true }
+    etime: { type: String, require: true }
 });
 
 const userSchema = new mongoose.Schema({
@@ -30,6 +31,7 @@ const userSchema = new mongoose.Schema({
 
 const creater = new mongoose.model("users", userSchema);
 const otpcreater = new mongoose.model("otps", otpSchema);
+const forgotpasswordotpcreater = new mongoose.model("forgotpasswordotps", otpSchema);
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
@@ -131,23 +133,63 @@ app.post('/forgotpassword', async (req, res) => {
                 pass: `${process.env.AUTHPASSWORD}`, // generated ethereal password
             },
         });
-
+        const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
         var mailOptions = {
-            from: 'ghosharitro007@gmail.com',
+            from: `${process.env.AUTHUSER}`,
             to: `${req.body.email}`,
             subject: 'Sending Email using Node.js',
-            text: 'That was easy!'
+            text: `your otp no is ${otp}`
         };
 
         let info = await transporter.sendMail(mailOptions);
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        res.redirect('/signup');
+        const now = new Date();
+        const end = new Date(now.getTime() + 2 * 60 * 1000).getTime();
+        const data = await forgotpasswordotpcreater.insertMany([{ otpno: otp, etime: end }]);
+        res.json({ flag: "success" });
+
     } catch (error) {
-        res.redirect('/forgotpassword');
+        console.log(error);
     }
 
 
+})
+
+app.post('/forgotpasswordotp', async (req, res) => {
+    console.log(req.body);
+    try {
+        const now = new Date().getTime();
+        const checkotp = await forgotpasswordotpcreater.find({ otpno: req.body.otp })
+        console.log(checkotp);
+        if (checkotp) {
+            if (parseInt(checkotp[0].etime) >= now) {
+                res.json({ flag: "success" });
+            }
+            else {
+                res.json({ flag: "fail" });
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+
+})
+
+app.post('/changepassword', async (req, res) => {
+    console.log(req.body);
+    try {
+        var salt = bcrypt.genSaltSync(10);
+        const pass = await bcrypt.hashSync(req.body.password, salt);
+        const result = await creater.updateOne({ email: req.body.email }, { $set: { password: pass } })
+        console.log(result);
+        res.json({ flag: "success" });
+
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 app.post('/otp', async (req, res) => {
@@ -210,16 +252,16 @@ app.post('/signup', async (req, res) => {
             const checkotp = await otpcreater.find({ otpno: req.body.otp })
             console.log(checkotp);
             if (checkotp) {
-                if(parseInt(checkotp[0].etime)>=now)
-                {
+                if (parseInt(checkotp[0].etime) >= now) {
                     var salt = bcrypt.genSaltSync(10);
-                const pass = await bcrypt.hashSync(req.body.password1, salt);
-                const data = await creater.insertMany([{ fname: req.body.fname, lname: req.body.lname, email: req.body.email, password: pass }]);
-                const token = jwt.sign(`${data._id}`, 'hide');
-                res.cookie('jwt', token);
-                res.redirect("/university");
+                    const pass = await bcrypt.hashSync(req.body.password1, salt);
+                    const data = await creater.insertMany([{ fname: req.body.fname, lname: req.body.lname, email: req.body.email, password: pass }]);
+                    const token = jwt.sign(`${data._id}`, 'hide');
+                    res.cookie('jwt', token);
+                    creater.deleteMany({ otpno: req.body.otp });
+                    res.redirect("/university");
                 }
-                
+
             }
 
         }

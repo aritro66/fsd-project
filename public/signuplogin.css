@@ -16,7 +16,11 @@ body{
     padding: 5px;
 }
 
-#form{
+#form2,#form3{
+    display: none;
+}
+
+#form,#form2,#form3{
     width: 350px;
     border:1px solid black;
     padding: 40px 25px;
@@ -82,10 +86,28 @@ input[type="password"]
     font-size: 20px;
     cursor: pointer;
 }
-#submit{
+#submit,#submit2,#submit3{
     background-color: #5cb85c !important;
     color:white;
     border:none;
+    cursor: pointer;
+}
+#generate{
+    color:white;
+    background-color: #5cb85c;
+    border:none;
+    padding: 5px 10px;
+    position: absolute;
+    width: 76px;
+    right:25px;
+    cursor: pointer;
+}
+#forgotpassword{
+    float: right;
+    margin:10px 0px;
+}
+#otp{
+    padding-right: 85px;
 }
 
 a{

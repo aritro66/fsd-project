@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form action="" id="form" autocomplete="off" method="POST" action="/forgetpassword">
+    <form id="form" autocomplete="off">
         <div id="imgholder">
             <img src="./ezgif.com-gif-maker.gif" alt="">
             <div id="eyeband"></div>
@@ -19,17 +19,53 @@
         <h2 id="heading">Forgot Password</h2>
         <div id="cont">
             <input type="email" id="email" placeholder="Email" name="email" required><br><br>
-            <!-- <div class="password-layout">
-                <input type="password" id="pass" placeholder="Password" name="password" required>
-                <i class="fa-solid fa-eye" id="passicon"></i>
-            </div> -->
+           
             </br>
             
             <input type="submit" id="submit" value="Submit"><br/><br/>
             <span>Don't have any accoount? </span><a href="./signup">Sign Up</a>
         </div>
+        
+        
+    </form>
+    <form id="form2" autocomplete="off">
+        <div id="imgholder">
+            <img src="./ezgif.com-gif-maker.gif" alt="">
+            <div id="eyeband"></div>
+        </div>
+        <h2 id="heading">Verify OTP</h2>
+        <div id="cont">
+            <input type="text" id="otp" placeholder="OTP" name="otp"><br>
+            <input type="submit" id="submit2" value="Submit"><br/><br/>
+            
+        </div>
+        
+        
+        
+    </form>
+    <form id="form3" autocomplete="off">
+        <div id="imgholder">
+            <img src="./ezgif.com-gif-maker.gif" alt="">
+            <div id="eyeband"></div>
+        </div>
+        <h2 id="heading">Set New Password</h2>
+        <div id="cont">
+            <div class="password-layout">
+                <input type="password" id="pass" placeholder="New Password" name="password" required>
+                <i class="fa-solid fa-eye" id="passicon"></i>
+            </div>
+           
+            </br>
+            
+            <input type="submit" id="submit3" value="Submit"><br/><br/>
+
+            
+        </div>
+        
+        
     </form>
     <script src="./signuplogin.js"></script>
+    <script src="./forgot.js"></script>
 </body>
 
 </html>
