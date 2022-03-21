@@ -33,7 +33,7 @@ const creater = new mongoose.model("users", userSchema);
 const otpcreater = new mongoose.model("otps", otpSchema);
 const forgotpasswordotpcreater = new mongoose.model("forgotpasswordotps", otpSchema);
 
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 app.use(express.json());
@@ -62,7 +62,7 @@ app.get('/login', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.render('login');
+                res.render('login', { error: "" });
 
             }
             else {
@@ -72,7 +72,7 @@ app.get('/login', (req, res) => {
     }
     else {
 
-        res.render('login');
+        res.render('login', { error: "" });
     }
 });
 
@@ -91,12 +91,11 @@ app.post("/login", async (req, res) => {
 
             }
             else {
-                res.send('wrong password');
-
+                res.render('login', { error: "Wrong password or Wrong user" });
             }
         }
         else {
-            res.send('wrong email');
+            res.render('login', { error: "Wrong password or Wrong user" });
         }
     }
     catch (err) {
@@ -231,7 +230,7 @@ app.get('/signup', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.render('signup');
+                res.render('signup',{passcheck:"", error:""});
 
             }
             else {
@@ -241,7 +240,7 @@ app.get('/signup', (req, res) => {
     }
     else {
 
-        res.render('signup');
+        res.render('signup',{passcheck:"", error:""});
     }
 });
 
@@ -268,11 +267,11 @@ app.post('/signup', async (req, res) => {
         }
         catch (err) {
             console.log(err);
-            res.send("could\'nt sign up");
+            res.render('signup',{passcheck:"", error:"Unable to sign up"});
         }
     }
     else {
-        res.send("Password not matching...");
+        res.render('signup',{passcheck:"Password not matching...", error:""});
     }
 
 })

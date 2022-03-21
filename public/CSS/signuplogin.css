@@ -79,6 +79,10 @@ input[type="password"]
 .password-layout{
     position: relative;
 }
+#errortext,#passcheck{
+    color: rgb(255, 251, 0);
+    text-align: center;
+}
 #passicon, #repassicon{
     position: absolute;
     right:5px;

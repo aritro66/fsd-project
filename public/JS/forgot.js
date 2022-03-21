@@ -4,6 +4,7 @@ const form3 = document.getElementById("form3");
 const email = document.getElementById("email");
 const otpno = document.getElementById("otp");
 const password = document.getElementById("pass");
+const errorText = document.getElementById("errortext");
 
 form1.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -39,8 +40,13 @@ form2.addEventListener("submit", async (e) => {
     }).then((response) => response.json())
         .then((data) => {
             if (data.flag === "success") {
+                errorText.innerHTML="";
                 form2.style.display = "none";
                 form3.style.display = "block";
+            }
+            else
+            {
+                errorText.innerHTML="Wrong OTP Entered";
             }
         });
 })
