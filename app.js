@@ -33,8 +33,9 @@ const creater = new mongoose.model("users", userSchema);
 const otpcreater = new mongoose.model("otps", otpSchema);
 const forgotpasswordotpcreater = new mongoose.model("forgotpasswordotps", otpSchema);
 
-app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({ extended: false }))
+app.use(express.static(__dirname+'/public'));
+app.use(express.urlencoded({ extended: false }));
+app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(cookieParser());
 
@@ -61,7 +62,7 @@ app.get('/login', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.sendFile(__dirname + '/login.html');
+                res.render('login');
 
             }
             else {
@@ -71,7 +72,7 @@ app.get('/login', (req, res) => {
     }
     else {
 
-        res.sendFile(__dirname + '/login.html');
+        res.render('login');
     }
 });
 
@@ -109,17 +110,17 @@ app.get('/forgotpassword', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.sendFile(__dirname + '/forgot.html');
+                res.render('forgot');
 
             }
             else {
-                res.sendFile(__dirname + '/index.html');
+                res.render('index');
             }
         });
     }
     else {
 
-        res.sendFile(__dirname + '/forgot.html');
+        res.render('forgot');
     }
 });
 
@@ -230,7 +231,7 @@ app.get('/signup', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.sendFile(__dirname + '/signup.html');
+                res.render('signup');
 
             }
             else {
@@ -240,7 +241,7 @@ app.get('/signup', (req, res) => {
     }
     else {
 
-        res.sendFile(__dirname + '/signup.html');
+        res.render('signup');
     }
 });
 
@@ -285,7 +286,7 @@ app.get('/university', (req, res) => {
 
             }
             else {
-                res.sendFile(__dirname + '/index.html')
+                res.render('index')
             }
         });
     }
