@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
+const creater=require('./models/users');
+const otpcreater=require('./models/otps');
+const forgotpasswordotpcreater=require('./models/forgotpasswordotps');
+
 const passwordGenerator = require('generate-password');
 require('dotenv').config();
 
@@ -16,22 +20,6 @@ mongoose.connect(`${link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => { console.log("success"); app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); })
     .catch((err) => console.log(err));
 
-const otpSchema = new mongoose.Schema({
-    otpno: { type: String, require: true },
-    etime: { type: String, require: true }
-});
-
-const userSchema = new mongoose.Schema({
-    fname: { type: String, require: true },
-    lname: { type: String, require: true },
-    email: { type: String, require: true, unique: true },
-    phno: { type: String, require: true },
-    password: { type: String, require: true }
-});
-
-const creater = new mongoose.model("users", userSchema);
-const otpcreater = new mongoose.model("otps", otpSchema);
-const forgotpasswordotpcreater = new mongoose.model("forgotpasswordotps", otpSchema);
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }));
@@ -230,7 +218,7 @@ app.get('/signup', (req, res) => {
     if (chk) {
         jwt.verify(chk, 'hide', function (err, decoded) {
             if (err) {
-                res.render('signup',{passcheck:"", error:""});
+                res.render('signup', { passcheck: "", error: "" });
 
             }
             else {
@@ -240,7 +228,7 @@ app.get('/signup', (req, res) => {
     }
     else {
 
-        res.render('signup',{passcheck:"", error:""});
+        res.render('signup', { passcheck: "", error: "" });
     }
 });
 
@@ -255,9 +243,10 @@ app.post('/signup', async (req, res) => {
                 if (parseInt(checkotp[0].etime) >= now) {
                     var salt = bcrypt.genSaltSync(10);
                     const pass = await bcrypt.hashSync(req.body.password1, salt);
-                    const data = await creater.insertMany([{ fname: req.body.fname, lname: req.body.lname, email: req.body.email, password: pass }]);
+                    const data = await creater.insertMany([{ fname: req.body.fname, lname: req.body.lname, email: req.body.email, phno: req.body.phno, password: pass }]);
                     const token = jwt.sign(`${data._id}`, 'hide');
                     res.cookie('jwt', token);
+                    res.cookie('myaccount',JSON.stringify({ fname: req.body.fname, lname: req.body.lname, email: req.body.email, phno: req.body.phno, password: pass }));
                     creater.deleteMany({ otpno: req.body.otp });
                     res.redirect("/university");
                 }
@@ -267,11 +256,11 @@ app.post('/signup', async (req, res) => {
         }
         catch (err) {
             console.log(err);
-            res.render('signup',{passcheck:"", error:"Unable to sign up"});
+            res.render('signup', { passcheck: "", error: "Unable to sign up" });
         }
     }
     else {
-        res.render('signup',{passcheck:"Password not matching...", error:""});
+        res.render('signup', { passcheck: "Password not matching...", error: "" });
     }
 
 })
@@ -296,5 +285,14 @@ app.get('/university', (req, res) => {
 
 app.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
+    res.cookie('myaccount','',{maxAge:1});
     res.redirect('/signup');
+})
+
+app.get('/myaccount',(req,res)=>{
+    const info = JSON.parse(req.cookies.myaccount);
+    console.log(req.cookies.myaccount);
+    console.log({ fname: info.fname, lname: info.lname, email: info.email, phno: info.phno});
+    // { fname: req.body.fname, lname: req.body.lname, email: req.body.email, phno: req.body.phno, password: pass }
+    res.render('myaccount',{ fname: info.fname, lname: info.lname, email: info.email, phno: info.phno});
 })
