@@ -1,0 +1,39 @@
+.header {
+    /* background-color: #0c84a8; */
+    text-align: center;
+    color: rgba(219, 142, 19, 0.966);
+  }
+  body{
+    background-image: url(imag.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+.doctor a{
+text-align: center;
+font-size: 2rem;
+}
+
+.doctor .box .image{
+  width: 100%;
+}
+.doctor .box{
+  border: 5rem;
+  background-color: rgba(236, 227, 227, 0.589);
+  /* width: 60rem; */
+}
+
+
+.doctor .box .image img{
+  width: 60%;
+}
+
+.doctor .box .text{
+  margin-top: 1rem;
+  font-size: 18px;
+}
+
+.doctor .box{
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+
+}
