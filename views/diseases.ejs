@@ -26,18 +26,10 @@
             </div><br>
             <div class="List">
                 <ul>
-                     <a href="diseases2.html"><li>Acne</li></a> 
-                     <a href="diseases2.html"><li>Back Pain</li></a>
-                     <a href="diseases2.html"><li>Coronavirus</li></a>
-                     <a href="diseases2.html"><li>Cough and Cold</li></a>  
-                     <a href="diseases2.html"><li>Diabetes</li></a>
-                     <a href="diseases2.html"><li>Fever</li></a>   
-                     <a href="diseases2.html"><li>Fungal Infection</li></a>     
-                     <a href="diseases2.html"><li>Gastritis</li></a>
-                     <a href="diseases2.html"><li> Headaches</li></a> 
-                     <a href="diseases2.html"><li>Snake bite</li></a>  
-                     <a href="diseases2.html"><li>Stomach pain</li></a>  
-                     <a href="diseases2.html"><li>Thyroid</li></a>   
+                    <% diseaseslist.forEach(list=>{ %>
+                        <a href="disease/<%= list._id %>"><li><%= list.name %></li></a>
+                    <% })%>
+                     
                 </ul>    
             </div>      
 </body>
