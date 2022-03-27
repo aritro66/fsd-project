@@ -265,27 +265,27 @@ app.post('/signup', async (req, res) => {
 
 })
 
-// app.get('/home', (req, res) => {
-//     const chk = req.cookies.jwt;
-//     if (chk) {
-//         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {
-//             if (err) {
-//                 res.redirect('/signup');
+app.get('/home', (req, res) => {
+    const chk = req.cookies.jwt;
+    if (chk) {
+        jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {
+            if (err) {
+                res.redirect('/signup');
 
-//             }
-//             else {
-//                 res.render('home')
-//             }
-//         });
-//     }
-//     else {
-//         res.redirect('/signup');
-//     }
-// });
+            }
+            else {
+                res.render('home')
+            }
+        });
+    }
+    else {
+        res.redirect('/signup');
+    }
+});
 
-app.get('/home',(req,res)=>{
-    res.render('home');
-})
+// app.get('/home',(req,res)=>{
+//     res.render('home');
+// })
 
 app.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
