@@ -141,7 +141,9 @@ section{
     color:var(--black);
     cursor: pointer;
 }
-
+.header .header-1 .icons .dropdown-content a{
+    font-size: 1.7rem;
+}
 .header .header-1 .icons div:hover,
 .header .header-1 .icons a:hover{
     color:var(--green);
@@ -480,23 +482,23 @@ section{
 
 
  /* Online Consultation start  */
- .consultation{
+ #consultation{
 
     background-color: #dfe6e9;
     padding: .1em;
 }
 
-.consultation .heading1{
+#consultation .heading1{
  font-size: xx-large;
  color: green;
  margin-top: 2rem;
 }
 
-.consultation p{
+#consultation p{
     font-size: 15px;
     margin-bottom: 1rem;
 }
-.consultation .box{
+#consultation .box{
 background-color: white;
 border-radius: 8px;
 padding: 1em;
@@ -504,20 +506,20 @@ box-shadow: 0px 10px 2px #b2bec3;
 text-align: center;
 }
 
-.consultation .box .image{
+#consultation .box .image{
     height:120px;
     width: 100px;
   
 
 }
-.consultation .box .image img{
+#consultation .box .image img{
     height: 100%;
     width: 100%;
     margin-left: 70%;
 
 }
 
-.consultation .consult-container .box .text{
+#consultation .consult-container .box .text{
 
     text-align: center;
     margin-left: 1em;
@@ -1120,19 +1122,25 @@ margin-left: 20rem;
  .dropdown-content {
     display: none;
     position: absolute;
+    right:10px;
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    transform: translateY(-4px);
   }
   
   .dropdown-content a {
     color: black;
-    padding: 12px 16px;
+    padding: 6px 8px;
     text-decoration: none;
     display: block;
   }
   .dropdown:hover .dropdown-content {display: block;}
+  .dropdown-content:hover
+  {
+      display: block;
+  }
 
 /* media queries  */
 

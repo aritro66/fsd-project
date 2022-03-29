@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signup</title>
+    <title>Medixo</title>
+    <link rel="icon" href="./images/healthcare.png" type="image/x-icon">
     <link rel="stylesheet" href="./CSS/signuplogin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -21,27 +24,29 @@
             <input type="text" id="fname" placeholder="First Name" name="fname" required><br><br>
             <input type="text" id="lname" placeholder="Last Name" name="lname" required><br><br>
             <input type="email" id="email" placeholder="Email" name="email" required><br><br>
-            <input type="text" id="phno" pattern="[1-9]{1}[0-9]{9}" placeholder="Phone No" name="phno"
-                required><br><br>
-                <form action="">
-                    <input type="text" id="otp" placeholder="OTP" name="otp"><button id="generate">Generate</button><br><br>
-                </form>
-            
+            <input type="text" id="phno" pattern="[1-9]{1}[0-9]{9}" placeholder="Phone No" name="phno" required><br><br>
+            <form action="">
+                <input type="text" id="otp" placeholder="OTP" name="otp"><button id="generate">Generate</button><br><br>
+            </form>
+
             <div class="password-layout">
                 <input type="password" id="pass" placeholder="Password" name="password1" required>
                 <i class="fa-solid fa-eye" id="passicon"></i>
             </div>
             </br>
-            
+
             <div class="password-layout">
-                <input type="password" id="repass" placeholder="Confirm Password" name="password2"
-                required>
+                <input type="password" id="repass" placeholder="Confirm Password" name="password2" required>
                 <i class="fa-solid fa-eye" id="repassicon"></i>
             </div>
-            <span id="passcheck"><%= passcheck %></span><br>
-            <br/>
-            <input type="submit" id="submit" value="Submit"><br/><br/>
-            <span id="errortext"><%= error %></span><br>
+            <span id="passcheck">
+                <%= passcheck %>
+            </span><br>
+            <br />
+            <input type="submit" id="submit" value="Submit"><br /><br />
+            <span id="errortext">
+                <%= error %>
+            </span><br>
             <span>Already have an Account? </span><a href="login">Log In</a>
         </div>
     </form>

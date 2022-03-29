@@ -75,6 +75,8 @@ app.post("/login", async (req, res) => {
             if (result) {
                 const token2 = jwt.sign(`${data2[0]._id}`, process.env.JWTKEY);
                 res.cookie('jwt', token2);
+                res.cookie('myaccount', JSON.stringify({ fname: data2[0].fname, lname: data2[0].lname, email: data2[0].email, phno: data2[0].phno}));
+
                 res.redirect('/home');
 
             }
@@ -287,11 +289,6 @@ app.get('/home', (req, res) => {
 //     res.render('home');
 // })
 
-app.get('/logout', (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    res.cookie('myaccount', '', { maxAge: 1 });
-    res.redirect('/signup');
-})
 
 app.get('/myaccount', (req, res) => {
     const chk = req.cookies.jwt;
@@ -449,4 +446,10 @@ app.get('/checkout', (req, res) => {
         res.redirect('/signup');
     }
     
+})
+
+app.get('/logout', (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.cookie('myaccount', '', { maxAge: 1 });
+    res.redirect('/signup');
 })
