@@ -448,6 +448,25 @@ app.get('/checkout', (req, res) => {
     
 })
 
+app.get('/about', (req, res) => {
+    const chk = req.cookies.jwt;
+    if (chk) {
+        jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {
+            if (err) {
+                res.redirect('/signup');
+
+            }
+            else {
+                res.render('about');
+            }
+        });
+    }
+    else {
+        res.redirect('/signup');
+    }
+    
+})
+
 app.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.cookie('myaccount', '', { maxAge: 1 });
