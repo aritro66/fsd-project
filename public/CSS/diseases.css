@@ -18,9 +18,9 @@ h2{
 body{
   height: 100%;
   min-height: 100vh;
-  background-image: url(/images/bgg.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  /* background-image: url(/images/bgg.jpg); */
+  /* background-repeat: no-repeat; */
+  /* background-size: 100% 100%; */
 }
 .main{
   text-align: center;
@@ -33,14 +33,14 @@ body{
 p{
   font-family: "Agency FB";
   font-size: 1.5rem;
-  color: aliceblue;
+  /* color: aliceblue; */
 }
 strong{
   font-size: 2rem;
 }
 li{
   font-size: 1.5rem;
-  color: aliceblue;
+  /* color: aliceblue; */
 }
 hr.design {
   border: 0;

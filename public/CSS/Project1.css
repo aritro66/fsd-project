@@ -509,13 +509,14 @@ text-align: center;
 #consultation .box .image{
     height:120px;
     width: 100px;
-  
+    display: inline-block;
+    margin: auto;
 
 }
 #consultation .box .image img{
     height: 100%;
     width: 100%;
-    margin-left: 70%;
+    /* margin-left: 70%; */
 
 }
 

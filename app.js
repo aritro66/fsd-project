@@ -67,7 +67,7 @@ app.get('/login', (req, res) => {
 app.post("/login", async (req, res) => {
     console.log(req.body);
     try {
-        const data2 = await creater.find({ name: req.body.email });
+        const data2 = await creater.find({ email: req.body.email });
         console.log(data2);
         if (data2) {
 
