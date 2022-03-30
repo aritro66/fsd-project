@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();  //express app
 const mongoose = require('mongoose');   // mongodb connecting
 const bcrypt = require('bcryptjs');     // encrypting password
-const jwt = require('jsonwebtoken');    // json web tocker
+const jwt = require('jsonwebtoken');    // json web token
 const cookieParser = require('cookie-parser');  // parse cookie data
 const nodemailer = require('nodemailer');   // sending mail using node
 const otpGenerator = require('otp-generator');  // generates otp
@@ -133,7 +133,7 @@ app.get('/forgotpassword', (req, res) => {
 app.post('/forgotpassword', async (req, res) => {
     console.log(req.body);
     try {
-        // transporter is going to be an object that is able to send mai
+        // transporter is going to be an object that is able to send mail
         let transporter = nodemailer.createTransport({
             service: "gmail", 
             auth: {
@@ -142,7 +142,7 @@ app.post('/forgotpassword', async (req, res) => {
             },
         });
         const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-        // generating otp of size 6 and having noupper case alphabets and special characters
+        // generating otp of size 6 and having no upper case alphabets and special characters
         var mailOptions = {
             from: `${process.env.AUTHUSER}`,
             to: `${req.body.email}`,
@@ -197,7 +197,7 @@ app.post('/changepassword', async (req, res) => {
         const pass = await bcrypt.hashSync(req.body.password, salt);
         // password is hashed using hashing algorithim and applying salt
         const result = await creater.updateOne({ email: req.body.email }, { $set: { password: pass } })
-        // changin password
+        // changing password
         console.log(result);
         res.json({ flag: "success" });
 

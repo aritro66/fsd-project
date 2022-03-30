@@ -8,7 +8,7 @@ function validateForm()
     if (inputpass.value==inputrepass.value) {
         return true;
     } else {
-        alert("working");
+        alert("Password not matching");
         return false;
     }
 }
