@@ -3,6 +3,16 @@ var repass=document.getElementById("repassicon");
 var inputpass=document.getElementById("pass");
 var inputrepass=document.getElementById("repass");
 
+function validateForm()   
+{
+    if (inputpass.value==inputrepass.value) {
+        return true;
+    } else {
+        alert("working");
+        return false;
+    }
+}
+
 pass.addEventListener("click",()=>{
     if(pass.classList.contains("fa-eye"))
     {
