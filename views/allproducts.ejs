@@ -2,7 +2,8 @@
 <html>
 
 <head>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 		integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
 		crossorigin="anonymous">
@@ -11,6 +12,7 @@
 	<link rel="icon" href="./images/healthcare.png" type="image/x-icon">
 
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 	<!-- font awesome cdn link  -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -26,48 +28,52 @@
 
 
 		<div class="container">
+			<% productdata.forEach(data=>{ %>
 			<div class="col-xs-12 col-md-4">
 				<!-- First product box start here-->
 				<div class="prod-info-main prod-wrap clearfix">
 					<div class="row">
 						<div class="col-md-5 col-sm-12 col-xs-12">
 							<div class="product-image">
-								<img src="images/mbmainpro.png" class="img-responsive img-fluid " height="250px">
+								<img src="/<%= data.img %>" class="img-responsive img-fluid " height="250px">
 
 							</div>
 						</div>
 						<div class="col-md-7 col-sm-12 col-xs-12">
 							<div class="product-deatil">
 								<h5 class="name">
-									<a href="sproducts.html">
-										Product Code/Name here
+									<a href="singleproduct/<%= data._id %>">
+										<%= data.name %>
 									</a>
 									<a href="#">
-										<span>Product Category</span>
+										<span>Medical</span>
 									</a>
 
 								</h5>
 								<p class="price-container">
-									<span>$199</span>
+									<span><%= data.price %></span>
 								</p>
 								<span class="tag1"></span>
 							</div>
 							<div class="description">
-								<p>A Short product description here </p>
+								<p><%= data.desc.slice(0,30) %>...</p>
+								
 							</div>
 							<div class="product-info smart-form">
 								<div class="row">
 									<div class="col-md-12 ">
 										<a href="#" class="btn btn-danger active ">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
+										<a href="singleproduct/<%= data._id %>" class="btn btn-info active">More info</a>
 									</div>
 									<div class="col-md-12">
 										<div class="rating">Rating:
+											<% for(let i=1;i<=Number(data.rating);i++){%>
 											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
+											<% } %>
+											<% for(let i=Number(data.rating)+1;i<=5;i++){%>
+											<label for="stars-rating-5"><i class="fa fa-star text-warning"></i></label>
+											<% } %>
+											
 										</div>
 									</div>
 								</div>
@@ -77,568 +83,12 @@
 				</div>
 				<!-- end product -->
 			</div>
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/dabur-soap.jpg" alt="194x228" class="img-responsive img-fluid">
-
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$50</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="javascript:void(0);" class="btn btn-danger active">Add to cart</a>
-										<a href="javascript:void(0);" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end product -->
-			</div>
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd1.png" alt="194x228" class="img-responsive img-fluid">
-								<!-- <span class="tag3 special">
-						
-						</span>  -->
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$299</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="#" class="btn btn-danger active">Add to cart</a>
-										<a href="#" class="btn btn-info  active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end product -->
-			</div>
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd2.png" alt="194x228" class="img-responsive img-fluid">
-								<span class="tag2 sale">
-									SALE
-								</span>
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$1000</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="javascript:void(0);" class="btn btn-danger active">Add to cart</a>
-										<a href="javascript:void(0);" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end product -->
-			</div>
-
-
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd3.png" alt="194x228" class="img-responsive img-fluid">
-								<span class="tag2 sale">
-									SALE
-								</span>
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$1000</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="#" class="btn btn-danger active">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- First product box start here-->
-			<div class="col-xs-12 col-md-4">
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd4.png" class="img-responsive img-fluid " height="250px">
-
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here
-									</a>
-									<a href="#">
-										<span>Product Category</span>
-									</a>
-
-								</h5>
-								<p class="price-container">
-									<span>$199</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12 ">
-										<a href="#" class="btn btn-danger active ">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- product end here -->
-			</div>
-
-			<!-- new product adding  -->
-
-
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd10.png" alt="194x228" class="img-responsive img-fluid">
-								<span class="tag2 sale">
-									SALE
-								</span>
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$1000</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="#" class="btn btn-danger active">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- First product box start here-->
-			<div class="col-xs-12 col-md-4">
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd9.png" class="img-responsive img-fluid " height="250px">
-
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here
-									</a>
-									<a href="#">
-										<span>Product Category</span>
-									</a>
-
-								</h5>
-								<p class="price-container">
-									<span>$199</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12 ">
-										<a href="#" class="btn btn-danger active ">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
+			<% }) %>
 
 
 
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd6.png" alt="194x228" class="img-responsive img-fluid">
-								<span class="tag2 sale">
-									SALE
-								</span>
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$1000</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="#" class="btn btn-danger active">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- First product box start here-->
-			<div class="col-xs-12 col-md-4">
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd7.png" class="img-responsive img-fluid " height="250px">
-
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here
-									</a>
-									<a href="#">
-										<span>Product Category</span>
-									</a>
-
-								</h5>
-								<p class="price-container">
-									<span>$199</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12 ">
-										<a href="#" class="btn btn-danger active ">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-
-			<div class="col-xs-12 col-md-4">
-				<!-- First product box start here-->
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd1.png" alt="194x228" class="img-responsive img-fluid">
-								<span class="tag2 sale">
-									SALE
-								</span>
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here <span>Product Category</span>
-									</a>
-								</h5>
-								<p class="price-container">
-									<span>$1000</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12">
-										<a href="#" class="btn btn-danger active">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- First product box start here-->
-			<div class="col-xs-12 col-md-4">
-				<div class="prod-info-main prod-wrap clearfix">
-					<div class="row">
-						<div class="col-md-5 col-sm-12 col-xs-12">
-							<div class="product-image">
-								<img src="images/pd2.png" class="img-responsive img-fluid " height="250px">
-
-							</div>
-						</div>
-						<div class="col-md-7 col-sm-12 col-xs-12">
-							<div class="product-deatil">
-								<h5 class="name">
-									<a href="#">
-										Product Code/Name here
-									</a>
-									<a href="#">
-										<span>Product Category</span>
-									</a>
-
-								</h5>
-								<p class="price-container">
-									<span>$199</span>
-								</p>
-								<span class="tag1"></span>
-							</div>
-							<div class="description">
-								<p>A Short product description here </p>
-							</div>
-							<div class="product-info smart-form">
-								<div class="row">
-									<div class="col-md-12 ">
-										<a href="#" class="btn btn-danger active ">Add to cart</a>
-										<a href="#" class="btn btn-info active">More info</a>
-									</div>
-									<div class="col-md-12">
-										<div class="rating">Rating:
-											<label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
-											<label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
-											<label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- product end here -->
-			</div>
-			<!-- new product ends here  -->
 		</div>
+		
 
 		<!-- footer section starts  -->
 
@@ -685,11 +135,11 @@
 			</div>
 
 			<div class="share">
-				<a href="#" class="facebook"><img src="images/fbicon.png" alt=""></a>
-				<a href="#" class="twitter"><img src="images/twiter.png" alt=""></a>
-				<a href="#" class="instagram"><img src="images/insta.png" alt=""></a>
-				<a href="#" class="linkedin"><img src="images/linkdin.png" alt=""></a>
-				<a href="#" class="pinterest"><img src="images/pintrest.png" alt=""></a>
+				<a href="#" class="facebook"><img src="/images/fbicon.png" alt=""></a>
+				<a href="#" class="twitter"><img src="/images/twiter.png" alt=""></a>
+				<a href="#" class="instagram"><img src="/images/insta.png" alt=""></a>
+				<a href="#" class="linkedin"><img src="/images/linkdin.png" alt=""></a>
+				<a href="#" class="pinterest"><img src="/images/pintrest.png" alt=""></a>
 			</div>
 
 			<div class="credit"> created by <span>Mr. A.K.Arya</span> | all rights reserved! </div>

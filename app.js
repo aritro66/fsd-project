@@ -11,6 +11,7 @@ const creater = require('./models/users');
 const otpcreater = require('./models/otps');
 const diseasecreater = require('./models/diseases');
 const forgotpasswordotpcreater = require('./models/forgotpasswordotps');
+const productcreater = require("./models/products");
 
 require('dotenv').config(); // reading environment variables or automatically loads environment variables from a . env file into the process.
 
@@ -302,9 +303,11 @@ app.post('/signup', async (req, res) => {
 })
 
 // home page route get method
-app.get('/home', (req, res) => {
+app.get('/home', async(req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
+    const productlist = await productcreater.find();
+    console.log(productlist)
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
             if (err) {
@@ -312,7 +315,7 @@ app.get('/home', (req, res) => {
 
             }
             else {
-                res.render('home')      // if logged in
+                res.render('home',{productdata:productlist})      // if logged in
             }
         });
     }
@@ -348,8 +351,10 @@ app.get('/myaccount', (req, res) => {
 
 // products page route get method
 // product list
-app.get('/products', (req, res) => {
+app.get('/products', async(req, res) => {
     const chk = req.cookies.jwt;
+    const productlist = await productcreater.find();
+
     // getting cookie named jwt
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
@@ -358,7 +363,7 @@ app.get('/products', (req, res) => {
 
             }
             else {
-                res.render('allproducts');  // if logged in
+                res.render('allproducts',{productdata:productlist});  // if logged in
             }
         });
     }
@@ -368,16 +373,18 @@ app.get('/products', (req, res) => {
 })
 
 // singleproduct page route get method
-app.get('/singleproducts', (req, res) => {
+app.get('/singleproduct/:id', async(req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
+        const productlist = await productcreater.find({ _id: req.params.id });
+
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
             if (err) {
                 res.redirect('/signup');    // if not logged in
             }
             else {
-                res.render('sproducts');    // if logged in
+                res.render('sproducts',{data:productlist[0]});    // if logged in
             }
         });
     }
