@@ -198,6 +198,18 @@ section{
     background:var(--dark-color);
 }
 
+#cartno{
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background-color: purple;
+    color: white;
+    transform: translate(-7px,-12px);
+}
+
 /* .login-form-container{
     display: flex;
     align-items: center;

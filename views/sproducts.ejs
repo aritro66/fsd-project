@@ -57,7 +57,12 @@
 
                 <div class="about_item">
                     <div class="payment">
-                        <a href="javascript:void(0);" class="btn btn-danger active">Add to cart</a>
+                        <% if(flag===0){%>
+                        <a class="btn btn-danger active addcart" iddata="<%= data.id %>">Add to cart</a>
+                        <% } else{ %>
+                        <button type="button" class="btn btn-default btn-lg" disabled="disabled" style="color: black;">Add to cart</button>
+                        <% } %>
+
                     </div>
 
                     <h4>About Item</h4>

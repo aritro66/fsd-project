@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');  // parse cookie data
 const nodemailer = require('nodemailer');   // sending mail using node
 const otpGenerator = require('otp-generator');  // generates otp
 // modals for users, otps, diseases and forgetpassword otps
-const creater = require('./models/users');  
+const creater = require('./models/users');
 const otpcreater = require('./models/otps');
 const diseasecreater = require('./models/diseases');
 const forgotpasswordotpcreater = require('./models/forgotpasswordotps');
@@ -20,8 +20,9 @@ const PORT = process.env.PORT || 4000;
 // url to connect mongodb
 const link = `mongodb+srv://${process.env.PASSWORD}:mongodb2002@cluster0.8et7m.mongodb.net/${process.env.DATABASENAME}`;
 mongoose.connect(`${link}`, { useNewUrlParser: true, useUnifiedTopology: true }) // to avoid warning
-    .then(() => { console.log("success");
-     app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // listen for request
+    .then(() => {
+        console.log("success");
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // listen for request
     })
     .catch((err) => console.log(err));
 
@@ -91,7 +92,7 @@ app.post("/login", async (req, res) => {
             if (result) {
                 const token2 = jwt.sign(`${data2[0]._id}`, process.env.JWTKEY); // creating token 
                 res.cookie('jwt', token2); // adding token to cookie
-                res.cookie('myaccount', JSON.stringify({ fname: data2[0].fname, lname: data2[0].lname, email: data2[0].email, phno: data2[0].phno}));   // cookie for account data
+                res.cookie('myaccount', JSON.stringify({ fname: data2[0].fname, lname: data2[0].lname, email: data2[0].email, phno: data2[0].phno }));   // cookie for account data
                 res.redirect('/home');
             }
             else {
@@ -136,7 +137,7 @@ app.post('/forgotpassword', async (req, res) => {
     try {
         // transporter is going to be an object that is able to send mail
         let transporter = nodemailer.createTransport({
-            service: "gmail", 
+            service: "gmail",
             auth: {
                 user: `${process.env.AUTHUSER}`, // auth user gmail
                 pass: `${process.env.AUTHPASSWORD}`, // auth user password
@@ -213,7 +214,7 @@ app.post('/otp', async (req, res) => {
     try {
         // transporter is going to be an object that is able to send mai
         let transporter = nodemailer.createTransport({
-            service: "gmail", 
+            service: "gmail",
             auth: {
                 user: `${process.env.AUTHUSER}`, // auth user gmail
                 pass: `${process.env.AUTHPASSWORD}`, // auth user password
@@ -303,11 +304,11 @@ app.post('/signup', async (req, res) => {
 })
 
 // home page route get method
-app.get('/home', async(req, res) => {
+app.get('/home', async (req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
     const productlist = await productcreater.find();
-    console.log(productlist)
+    // console.log(productlist)
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
             if (err) {
@@ -315,7 +316,14 @@ app.get('/home', async(req, res) => {
 
             }
             else {
-                res.render('home',{productdata:productlist})      // if logged in
+                if(req.cookies.cart)
+                {
+                    res.render('home', { productdata: productlist, cartlength: JSON.parse(req.cookies.cart).length })      // if logged in
+                }
+                else
+                {
+                    res.render('home', { productdata: productlist, cartlength: 0 })
+                }
             }
         });
     }
@@ -351,7 +359,7 @@ app.get('/myaccount', (req, res) => {
 
 // products page route get method
 // product list
-app.get('/products', async(req, res) => {
+app.get('/products', async (req, res) => {
     const chk = req.cookies.jwt;
     const productlist = await productcreater.find();
 
@@ -363,7 +371,14 @@ app.get('/products', async(req, res) => {
 
             }
             else {
-                res.render('allproducts',{productdata:productlist});  // if logged in
+                if(req.cookies.cart)
+                {
+                    res.render('allproducts', { productdata: productlist, cartlist: JSON.parse(req.cookies.cart),cartlength: JSON.parse(req.cookies.cart).length });  // if logged in
+                }
+                else
+                {
+                    res.render('allproducts', { productdata: productlist, cartlist: [],cartlength: 0 });  // if logged in
+                }
             }
         });
     }
@@ -373,10 +388,10 @@ app.get('/products', async(req, res) => {
 })
 
 // singleproduct page route get method
-app.get('/singleproduct/:id', async(req, res) => {
+app.get('/singleproduct/:id', async (req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
-        const productlist = await productcreater.find({ _id: req.params.id });
+    const productlist = await productcreater.find({ _id: req.params.id });
 
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
@@ -384,7 +399,15 @@ app.get('/singleproduct/:id', async(req, res) => {
                 res.redirect('/signup');    // if not logged in
             }
             else {
-                res.render('sproducts',{data:productlist[0]});    // if logged in
+                if(req.cookies.cart)
+                {
+                    const chk2 = JSON.parse(req.cookies.cart).filter(ele => ele.id === req.params.id);    
+                    res.render('sproducts', { data: productlist[0], flag: chk2.length, cartlength: JSON.parse(req.cookies.cart).length });    // if logged in
+                }
+                else
+                {
+                    res.render('sproducts', { data: productlist[0], flag: 0, cartlength: 0 });    // if logged in
+                }
             }
         });
     }
@@ -392,6 +415,64 @@ app.get('/singleproduct/:id', async(req, res) => {
         res.redirect('/signup');    // if not logged in
     }
 
+})
+
+app.post('/addtocart', async (req, res, next) => {
+    console.log(req.body);
+    const productlist = await productcreater.find({ _id: req.body.productid });
+    const chk = req.cookies.cart;
+    if (chk) {
+        let info = JSON.parse(req.cookies.cart);
+        info.push({ id: req.body.productid, name: productlist[0].name, img: productlist[0].img, price: productlist[0].price, quantity: 1 });
+        console.log(info);
+        res.cookie('cart', JSON.stringify(info));
+    }
+    else {
+        console.log("heheh");
+        res.cookie('cart', JSON.stringify([{ id: req.body.productid, name: productlist[0].name, img: productlist[0].img, price: productlist[0].price, quantity: 1 }]))
+    }
+    next();
+})
+app.post('/deletecart', async (req, res, next) => {
+    console.log(req.body);
+    
+    let info = JSON.parse(req.cookies.cart).filter(ele => ele.id !== req.body.productid);
+    console.log(info);
+    res.cookie('cart', JSON.stringify(info));
+
+    next();
+})
+
+app.post('/descquantity', async (req, res, next) => {
+    console.log(req.body);
+    let info = JSON.parse(req.cookies.cart)
+    for(let i=0;i<info.length;i++)
+    {
+        if(info[i].id===req.body.productid)
+        {
+            info[i].quantity-=1;
+        }
+    }
+    console.log(info);
+    res.cookie('cart', JSON.stringify(info));
+
+    next();
+})
+
+app.post('/incquantity', async (req, res, next) => {
+    console.log(req.body);
+    let info = JSON.parse(req.cookies.cart)
+    for(let i=0;i<info.length;i++)
+    {
+        if(info[i].id===req.body.productid)
+        {
+            info[i].quantity+=1;
+        }
+    }
+    console.log(info);
+    res.cookie('cart', JSON.stringify(info));
+
+    next();
 })
 
 // diseases page route get method
@@ -459,7 +540,7 @@ app.get('/doctor', (req, res) => {
     else {
         res.redirect('/signup');    // if not logged in
     }
-    
+
 })
 
 // addtocart page route get method
@@ -474,14 +555,17 @@ app.get('/addtocart', (req, res) => {
 
             }
             else {
-                res.render('addtocart');    // if logged in
+                if (req.cookies.cart)
+                    res.render('addtocart', { data: JSON.parse(req.cookies.cart) });    // if logged in
+                else
+                    res.render('addtocart', { data: [] });
             }
         });
     }
     else {
         res.redirect('/signup');    // if not logged in
     }
-    
+
 })
 
 // checkout page route get method
@@ -503,7 +587,7 @@ app.get('/checkout', (req, res) => {
     else {
         res.redirect('/signup');    // if not logged in
     }
-    
+
 })
 
 // about page route get method
@@ -525,7 +609,7 @@ app.get('/about', (req, res) => {
     else {
         res.redirect('/signup');    // if not logged in
     }
-    
+
 })
 
 // logout
