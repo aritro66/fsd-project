@@ -4,16 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. Helpy</title>
-    <link rel="icon" href="./images/healthcare.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
         integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <title>Dr. Helpy</title>
+    <link rel="icon" href="./images/healthcare.png" type="image/x-icon">
+
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- css file link  -->
     <link rel="stylesheet" href="/CSS/Project1.css">
 
     <style>
@@ -35,131 +39,88 @@
     <!-- header section start here  -->
     <%- include('./partials/navbar.ejs'); %>
 
-    
-    <!-- header section end here -->
 
-    <section class="container_sproducts my-5 pt-5">
+        <!-- header section end here -->
 
-        <div class="row mt-5">
+        <section class="container_sproducts my-5 pt-5">
 
-            <div class="col-lg-5 col-md-6 col-6">
-                <img class="" src="/<%= data.img %>" id="MainImg" alt="">
+            <div class="row mt-5">
 
-            </div>
+                <div class="col-lg-5 col-md-6 col-6">
+                    <img class="" src="/<%= data.img %>" id="MainImg" alt="">
 
-            <div class="col-lg-6 col-md-6 col-6">
-                <h3><%= data.name %></h3>
-                <!-- <a href="#"> <span>Visit the OPTIMUM NUTRITION Store</span> </a> -->
-                <div class="price">
-                    M.R.P. : <span><%= data.price %></span>
-                    
                 </div>
 
-                <div class="about_item">
-                    <div class="payment">
-                        <% if(flag===0){%>
-                        <a class="btn btn-danger active addcart" iddata="<%= data.id %>">Add to cart</a>
-                        <% } else{ %>
-                        <button type="button" class="btn btn-default btn-lg" disabled="disabled" style="color: black;">Add to cart</button>
-                        <% } %>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <h3>
+                        <%= data.name %>
+                    </h3>
+                    <!-- <a href="#"> <span>Visit the OPTIMUM NUTRITION Store</span> </a> -->
+                    <div class="price">
+                        M.R.P. : <span>
+                            <%= data.price %>
+                        </span>
 
                     </div>
 
-                    <h4>About Item</h4>
-                    <ul>
-                        <% data.uses.split("\\n").forEach((ele)=>{ %>
-                        <li><%= ele %></li>
-                        <% }) %>
-                    </ul>
+                    <div class="about_item">
+                        <div class="payment">
+                            <% if(flag===0){%>
+                                <a class="btn btn-danger active addcart" iddata="<%= data.id %>">Add to cart</a>
+                                <% } else{ %>
+                                    <button type="button" class="btn btn-default btn-lg" disabled="disabled"
+                                        style="color: black;">Add to cart</button>
+                                    <% } %>
+
+                        </div>
+
+                        <h4>About Item</h4>
+                        <ul>
+                            <% data.uses.split("\\n").forEach((ele)=>{ %>
+                                <li>
+                                    <%= ele %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+
                 </div>
+
 
             </div>
 
-
-        </div>
-
-    </section>
-    <section class="product-description">
+        </section>
+        <section class="product-description">
 
 
 
-        <div>
-            <h2>Product Description</h2>
-        </div>
-        <!-- <div class="proimag">
+            <div>
+                <h2>Product Description</h2>
+            </div>
+            <!-- <div class="proimag">
             <img src="images/im1.png" alt="">
 
 
         </div> -->
-        <div class="product_dic">
+            <div class="product_dic">
 
-            <h2><%= data.name %></h2>
-            <p><%= data.desc %></p>
-            
-        </div>
+                <h2>
+                    <%= data.name %>
+                </h2>
+                <p>
+                    <%= data.desc %>
+                </p>
 
-        
-
-        
-    </section>
-
-    <!-- footer section starts  -->
-
-    <section class="footer">
-
-        <div class="box-container">
-
-            <div class="box">
-                <h3>our locations</h3>
-                <a href="#"> <i class="fas fa-map-marker-alt"></i> india </a>
-                <a href="#"> <i class="fas fa-map-marker-alt"></i> USA </a>
-                <a href="#"> <i class="fas fa-map-marker-alt"></i> russia </a>
-                <a href="#"> <i class="fas fa-map-marker-alt"></i> france </a>
             </div>
 
-            <div class="box">
-                <h3>quick links</h3>
-                <a href="#"> <i class="fas fa-arrow-right"></i> home </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> featured </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> reviews </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> consultation </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> disease </a>
-            </div>
 
-            <div class="box">
-                <h3>extra links</h3>
-                <a href="#"> <i class="fas fa-arrow-right"></i> account info </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> ordered items </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> privacy policy </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> payment method </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> our serivces </a>
-            </div>
 
-            <div class="box">
-                <h3>contact info</h3>
-                <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
-                <a href="#"> <i class="fas fa-phone"></i> +111-222-3333 </a>
-                <a href="#"> <i class="fas fa-envelope"></i> Aarya@gmail.com </a>
-                <img src="images/worldmap.png" class="map" alt="">
-            </div>
 
-        </div>
+        </section>
 
-        <div class="share">
-            <a href="#" class="facebook"><img src="/images/fbicon.png" alt=""></a>
-            <a href="#" class="twitter"><img src="/images/twiter.png" alt=""></a>
-            <a href="#" class="instagram"><img src="/images/insta.png" alt=""></a>
-            <a href="#" class="linkedin"><img src="/images/linkdin.png" alt=""></a>
-            <a href="#" class="pinterest"><img src="/images/pintrest.png" alt=""></a>
-        </div>
+        <%- include('./partials/footer.ejs'); %>
 
-        <div class="credit"> created by <span>Mr. A.K.Arya</span> | all rights reserved! </div>
-
-    </section>
-
-    <!-- footer section ends -->
-
-    <script src="/JS/Project.js"></script>
+            <script src="/JS/Project.js"></script>
 </body>
 
 </html>

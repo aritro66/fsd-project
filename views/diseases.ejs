@@ -7,10 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Helpy</title>
     <link rel="icon" href="./images/healthcare.png" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="/CSS/diseases.css"> -->
+<link rel="icon" href="./images/healthcare.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+        integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+        crossorigin="anonymous">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/CSS/Project1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/CSS/diseases.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
 </head>
-<link rel="stylesheet" href="/CSS/diseases.css">
 
 <body>
+    <%- include('./partials/navbar.ejs'); %>
+
     <div class="header">
         <h1><strong>Diseases and their cure</strong></h1>
     </div>
@@ -18,12 +30,7 @@
 
         
             <div style="text-align: right;">
-                <nav class="navbar">
-                    <!-- <form class="form-inline" action="/action_page.php"> -->
-                    <input class="form-control" type="text" placeholder="Search">
-                    <button class="btn btn-success" type="submit">Search</button>
-                    </form>
-                </nav>
+                
             </div> <br>
             <div class="desc">
                 <p>Below is the list of common diseases and injuries sorted by A-Z</p>

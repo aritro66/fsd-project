@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <title>Dr. Helpy</title>
+    <link rel="icon" href="./images/healthcare.png" type="image/x-icon">
+
+</head>
+
+<body>
+    <section class="h-100" style="background-color: #eee;min-height: 100vh;">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+
+                    <div>
+                        <h3 class="fw-normal mb-0 text-black">Admin</h3>
+
+                    </div>
+                    <% if(data.length===0){ %>
+                        <p>No users registered</p>
+
+                        
+                    <% }else{ %>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sno.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">Block/Unblock</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                
+                                <% data.forEach((ele,index)=> { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= index+1 %>
+                                        </th>
+                                        <td>
+                                            <%= ele.fname+" "+ele.lname %>
+                                        </td>
+                                        <td>
+                                            <%= ele.email %>
+                                        </td>
+                                        <td>                                            
+                                            <% if(ele.allow){ %>                                                
+                                                <button class="block" style="color: red;"><i iddata="<%= ele.id %>" class="fa-solid fa-ban"></i></button>
+                                            <%} else{%>
+                                                <button class="unblock" style="color: green;"><i iddata="<%= ele.id %>" class="fa-solid fa-check"></i></button>
+                                            <%}%>
+                                        </td>
+                                        
+                                    </tr>
+                
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    <% } %>
+                    
+                    
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+        <script src="./JS/access.js"></script>
+    
+</body>
+
+</html>

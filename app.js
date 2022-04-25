@@ -12,6 +12,8 @@ const otpcreater = require('./models/otps');
 const diseasecreater = require('./models/diseases');
 const forgotpasswordotpcreater = require('./models/forgotpasswordotps');
 const productcreater = require("./models/products");
+const ordercreater = require("./models/order");
+const { redirect } = require('express/lib/response');
 require('dotenv').config(); // reading environment variables or automatically loads environment variables from a . env file into the process.
 const stripe = require("stripe")(`${process.env.STRIPESECRETEKEY}`);
 
@@ -85,7 +87,7 @@ app.get('/login', (req, res) => {
 app.post("/login", async (req, res) => {
     console.log(req.body);
     try {
-        const data2 = await creater.find({ email: req.body.email }); // finding user by email
+        const data2 = await creater.find({ email: req.body.email, allow: true }); // finding user by email
         console.log(data2);
         if (data2) {
 
@@ -279,6 +281,7 @@ app.post('/signup', async (req, res) => {
             console.log(checkotp);
             if (checkotp) {     // checking otp
                 if (parseInt(checkotp[0].etime) >= now) { // checking if otp is active
+                    console.log("working")
                     var salt = bcrypt.genSaltSync(10);  // generating salt
                     // salt is a string of charcters different from password
                     const pass = await bcrypt.hashSync(req.body.password1, salt);
@@ -318,6 +321,7 @@ app.get('/home', async (req, res) => {
             }
             else {
                 if (req.cookies.cart) {
+                    console.log(req.cookies.cart)
                     res.render('home', { productdata: productlist, cartlength: JSON.parse(req.cookies.cart).length })      // if logged in
                 }
                 else {
@@ -478,7 +482,12 @@ app.get('/diseases', async (req, res) => {
 
             }
             else {
-                res.render("diseases", { diseaseslist: diseaselist });  // if logged in
+                if (req.cookies.cart) {
+                    res.render("diseases", { diseaseslist: diseaselist, cartlength: JSON.parse(req.cookies.cart).length });  // if logged in
+                }
+                else {
+                    res.render("diseases", { diseaseslist: diseaselist, cartlength: 0 });  // if logged in
+                }
             }
         });
     }
@@ -502,7 +511,12 @@ app.get('/disease/:id', async (req, res) => {
             }
             else {
                 console.log(singleDisease);
-                res.render("diseases2", { disease: singleDisease[0] }); // if logged in
+                if (req.cookies.cart) {
+                    res.render("diseases2", { disease: singleDisease[0], cartlength: JSON.parse(req.cookies.cart).length }); // if logged in
+                }
+                else {
+                    res.render("diseases2", { disease: singleDisease[0], cartlength: 0 }); // if logged in
+                }
             }
         });
     }
@@ -606,11 +620,12 @@ app.post('/checkout', async (req, res) => {
         res.status(500).json({ error: e.message })
     }
 
-
-
-
 })
-app.get('/success',(req,res)=>{
+app.get('/success', async (req, res) => {
+    const data = await ordercreater.insertMany([{ order: req.cookies.cart, email: JSON.parse(req.cookies.myaccount).email }]);
+    console.log(data)
+    res.cookie('cart', JSON.stringify([]));
+
     res.render('success');
 })
 // about page route get method
@@ -633,6 +648,55 @@ app.get('/about', (req, res) => {
         res.redirect('/signup');    // if not logged in
     }
 
+})
+app.get('/admin', async (req, res) => {
+    const data = await creater.find({ email: { $ne: "ghosharitro66@gmail.com" } }); // finding user by email
+    const chk = req.cookies.jwt;
+    if (chk) {  // checking if jwt exists
+        jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
+            if (err) {
+                res.redirect('/signup');    // if not logged in
+
+            }
+            else {
+                if (req.cookies.myaccount) {
+                    if (JSON.parse(req.cookies.myaccount).email === "ghosharitro66@gmail.com") {
+                        res.render('admin', { data: data });
+                    }
+                    else {
+                        res.redirect('/home')
+                    }
+                }
+                else {
+                    res.redirect('/home')
+                }
+            }
+        });
+    }
+    else {
+        res.redirect('/signup');    // if not logged in
+    }
+})
+
+app.post('/block', async (req, res, next) => {
+    console.log(req.body);
+    const result = await creater.updateOne({ _id: req.body.productid }, { $set: { allow: false } })
+    console.log(result);
+    next();
+})
+
+app.post('/unblock', async (req, res, next) => {
+    console.log(req.body);
+    const result = await creater.updateOne({ _id: req.body.productid }, { $set: { allow: true } })
+    console.log(result);
+    next();
+})
+
+
+app.get('/myorder', async (req, res) => {
+    const data = await ordercreater.find({ email: JSON.parse(req.cookies.myaccount).email }); // finding user by email
+    console.log(data);
+    res.render('myorder', { data, data });
 })
 
 // logout

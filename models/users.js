@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     lname: { type: String, require: true },
     email: { type: String, require: true, unique: true },
     phno: { type: String, require: true },
-    password: { type: String, require: true }
+    password: { type: String, require: true },
+    allow: {type:Boolean,default: true, require:true}
 });
 // creating model
 const creater = new mongoose.model("users", userSchema);
