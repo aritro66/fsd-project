@@ -23,10 +23,11 @@
     <%- include('./partials/navbar.ejs'); %>
 
 
-
-    <p class="main"><strong>
+    <div id="cont" style="padding: 20px 30px;line-height: 200%;">
+        <p class="main"><strong>
             <%= disease.name%>
         </strong></p>
+        
     <img src="/<%= disease.image %>">
     <p><strong>Symptoms</strong></p>
     <ul>
@@ -47,6 +48,8 @@
     </ol>
 
     <hr class="design">
+    </div>
+    
 
 </body>
 

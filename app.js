@@ -474,7 +474,7 @@ app.post('/incquantity', async (req, res, next) => {
 app.get('/diseases', async (req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
-    const diseaselist = await diseasecreater.find();
+    const diseaselist = await diseasecreater.find({},null, {sort: {name: 1}});
     if (chk) {  // checking if jwt exists
         jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
             if (err) {
