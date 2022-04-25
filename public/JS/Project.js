@@ -25,20 +25,7 @@ window.onload = () => {
   } else {
     document.querySelector('.header .header-2').classList.remove('active');
   }
-  // if (document.getElementById("addcart")) {
-  //   document.getElementById("addcart").addEventListener('click', async (e) => {
-  //     console.log(e.target.getAttribute("iddata"));
-  //     const rawResponse = await fetch('http://localhost:4000/addtocart', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ productid: e.target.getAttribute("iddata") })
-  //     })
-  //     window.location.reload();
-  //   })
-  // }
+
   const addcart=document.getElementsByClassName('addcart');
   if(addcart)
   {

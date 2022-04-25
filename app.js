@@ -12,8 +12,9 @@ const otpcreater = require('./models/otps');
 const diseasecreater = require('./models/diseases');
 const forgotpasswordotpcreater = require('./models/forgotpasswordotps');
 const productcreater = require("./models/products");
-
 require('dotenv').config(); // reading environment variables or automatically loads environment variables from a . env file into the process.
+const stripe = require("stripe")(`${process.env.STRIPESECRETEKEY}`);
+
 
 
 const PORT = process.env.PORT || 4000;
@@ -316,12 +317,10 @@ app.get('/home', async (req, res) => {
 
             }
             else {
-                if(req.cookies.cart)
-                {
+                if (req.cookies.cart) {
                     res.render('home', { productdata: productlist, cartlength: JSON.parse(req.cookies.cart).length })      // if logged in
                 }
-                else
-                {
+                else {
                     res.render('home', { productdata: productlist, cartlength: 0 })
                 }
             }
@@ -371,13 +370,11 @@ app.get('/products', async (req, res) => {
 
             }
             else {
-                if(req.cookies.cart)
-                {
-                    res.render('allproducts', { productdata: productlist, cartlist: JSON.parse(req.cookies.cart),cartlength: JSON.parse(req.cookies.cart).length });  // if logged in
+                if (req.cookies.cart) {
+                    res.render('allproducts', { productdata: productlist, cartlist: JSON.parse(req.cookies.cart), cartlength: JSON.parse(req.cookies.cart).length });  // if logged in
                 }
-                else
-                {
-                    res.render('allproducts', { productdata: productlist, cartlist: [],cartlength: 0 });  // if logged in
+                else {
+                    res.render('allproducts', { productdata: productlist, cartlist: [], cartlength: 0 });  // if logged in
                 }
             }
         });
@@ -399,13 +396,11 @@ app.get('/singleproduct/:id', async (req, res) => {
                 res.redirect('/signup');    // if not logged in
             }
             else {
-                if(req.cookies.cart)
-                {
-                    const chk2 = JSON.parse(req.cookies.cart).filter(ele => ele.id === req.params.id);    
+                if (req.cookies.cart) {
+                    const chk2 = JSON.parse(req.cookies.cart).filter(ele => ele.id === req.params.id);
                     res.render('sproducts', { data: productlist[0], flag: chk2.length, cartlength: JSON.parse(req.cookies.cart).length });    // if logged in
                 }
-                else
-                {
+                else {
                     res.render('sproducts', { data: productlist[0], flag: 0, cartlength: 0 });    // if logged in
                 }
             }
@@ -435,7 +430,7 @@ app.post('/addtocart', async (req, res, next) => {
 })
 app.post('/deletecart', async (req, res, next) => {
     console.log(req.body);
-    
+
     let info = JSON.parse(req.cookies.cart).filter(ele => ele.id !== req.body.productid);
     console.log(info);
     res.cookie('cart', JSON.stringify(info));
@@ -446,11 +441,9 @@ app.post('/deletecart', async (req, res, next) => {
 app.post('/descquantity', async (req, res, next) => {
     console.log(req.body);
     let info = JSON.parse(req.cookies.cart)
-    for(let i=0;i<info.length;i++)
-    {
-        if(info[i].id===req.body.productid)
-        {
-            info[i].quantity-=1;
+    for (let i = 0; i < info.length; i++) {
+        if (info[i].id === req.body.productid) {
+            info[i].quantity -= 1;
         }
     }
     console.log(info);
@@ -462,11 +455,9 @@ app.post('/descquantity', async (req, res, next) => {
 app.post('/incquantity', async (req, res, next) => {
     console.log(req.body);
     let info = JSON.parse(req.cookies.cart)
-    for(let i=0;i<info.length;i++)
-    {
-        if(info[i].id===req.body.productid)
-        {
-            info[i].quantity+=1;
+    for (let i = 0; i < info.length; i++) {
+        if (info[i].id === req.body.productid) {
+            info[i].quantity += 1;
         }
     }
     console.log(info);
@@ -570,26 +561,58 @@ app.get('/addtocart', (req, res) => {
 
 // checkout page route get method
 
-app.get('/checkout', (req, res) => {
+
+app.post('/checkout', async (req, res) => {
     const chk = req.cookies.jwt;
     // getting cookie named jwt
-    if (chk) {  // checking if jwt exists
-        jwt.verify(chk, process.env.JWTKEY, function (err, decoded) {   // verifing token
-            if (err) {
-                res.redirect('/signup');    // if not logged in
 
+    console.log(JSON.parse(req.cookies.cart));
+    try {
+        console.log(JSON.parse(req.cookies.cart).map(item => {
+
+            return {
+                price_data: {
+                    currency: "inr",
+                    product_data: {
+                        name: item.name,
+                    },
+                    unit_amount: Number(item.price.slice(1).split('.').join('')),
+                },
+                quantity: item.quantity,
             }
-            else {
-                res.render('checkout'); // if logged in
-            }
-        });
+        }))
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            mode: "payment",
+            line_items: JSON.parse(req.cookies.cart).map(item => {
+
+                return {
+                    price_data: {
+                        currency: "inr",
+                        product_data: {
+                            name: item.name,
+                        },
+                        unit_amount: Number(item.price.slice(1).split('.').join('')),
+                    },
+                    quantity: item.quantity,
+                }
+            }),
+            success_url: `${"http://localhost:4000"}/success`,
+            cancel_url: `${"http://localhost:4000"}/addtocart`,
+        })
+        console.log(session.url)
+        res.json({ url: session.url })
+    } catch (e) {
+        res.status(500).json({ error: e.message })
     }
-    else {
-        res.redirect('/signup');    // if not logged in
-    }
+
+
+
 
 })
-
+app.get('/success',(req,res)=>{
+    res.render('success');
+})
 // about page route get method
 
 app.get('/about', (req, res) => {
