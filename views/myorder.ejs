@@ -37,6 +37,7 @@
                                     </h3>
                                     <h5>
                                         Date <%= `${ele.createdAt.getDate()}/${ele.createdAt.getMonth()+1}/${ele.createdAt.getFullYear()}` %>
+                                        Time <%= `${ele.createdAt.getHours()}:${ele.createdAt.getMinutes()+1}:${ele.createdAt.getSeconds()}` %>
                                     </h5>
                                     <% JSON.parse(ele.order).forEach(dataele=>{ %>
                                         <div class="card rounded-3">
