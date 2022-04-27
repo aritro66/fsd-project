@@ -35,6 +35,9 @@
                                     <h3>
                                         Order <%= index+1 %>
                                     </h3>
+                                    <h5>
+                                        Date <%= `${ele.createdAt.getDate()}/${ele.createdAt.getMonth()+1}/${ele.createdAt.getFullYear()}` %>
+                                    </h5>
                                     <% JSON.parse(ele.order).forEach(dataele=>{ %>
                                         <div class="card rounded-3">
                                             <div class="card-body p-4">

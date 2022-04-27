@@ -13,7 +13,6 @@ const diseasecreater = require('./models/diseases');
 const forgotpasswordotpcreater = require('./models/forgotpasswordotps');
 const productcreater = require("./models/products");
 const ordercreater = require("./models/order");
-const { redirect } = require('express/lib/response');
 require('dotenv').config(); // reading environment variables or automatically loads environment variables from a . env file into the process.
 const stripe = require("stripe")(`${process.env.STRIPESECRETEKEY}`);
 
